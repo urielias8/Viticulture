@@ -1,12 +1,14 @@
 package manager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 import model.Bodega;
 import model.Campo;
@@ -17,12 +19,13 @@ public class Manager {
 	private Session session;
 	private Transaction tx;
 
-	private Entrada entrada;
 	private Bodega winery;
 	private Campo field;
+	private List<Entrada> entrada;
 
 	private Manager() {
-
+		entrada = new ArrayList<>();
+		winery = new Bodega();
 	}
 
 	public static Manager getInstance() {
@@ -36,37 +39,33 @@ public class Manager {
 		initSession();
 		game();
 		endSession();
-
 	}
 
 	private void game() {
-		for (int i = 1; i < 20; i++) {
-			entrada = getEntrada(i);
-			entrada();
-			// Crea un objeto bodega en base de datos.
-		}
-	}
-
-	private void entrada() {
-		String instrucction = entrada.toString().split(" ")[0];
-		String type = entrada.toString().split(" ")[1];
-		switch (instrucction) {
-		case "B":
-			insertWinery(type);
-			break;
-		}
-
+		entrada = getAllEntrada();	
+		
+		for (Entrada en : entrada) {
+			System.out.println(en);
+			switch (en.getInstrucction().charAt(0)) {
+			case 'B':
+				insertWinery(en.getInstrucction().split(" ")[1]);
+				break;
+			}
+		}		
 	}
 
 	private void insertWinery(String type) {
+		
+		winery = new Bodega(type);
+		
 		try {
 		
 			tx = session.beginTransaction();
 
-			session.save(type);
+			session.save(winery);
 
 			tx.commit();
-			System.out.println("Inserted Successfully.");
+			//System.out.println("Inserted Successfully.");
 
 		} catch (HibernateException e) {
 			if (tx != null)
@@ -75,26 +74,28 @@ public class Manager {
 		}
 	}
 
-	private Entrada getEntrada(int i) {
+	private ArrayList<Entrada> getAllEntrada() {
+		ArrayList<Entrada> entry = new ArrayList<>();
+
 		try {
 			tx = session.beginTransaction();
 
-			Entrada entrada = session.get(Entrada.class, i);
+			Query q = session.createQuery("from Entrada");
 
-			System.out.println(entrada.toString());
-
+			q.list();
+			
+			entry.addAll(q.list());
+			
 			tx.commit();
-			System.out.println("Saved Successfully.");
-
-			return entrada;
+			System.out.println("Get All Successfully.");
 
 		} catch (HibernateException e) {
 			if (tx != null)
-				tx.rollback(); // Roll back if any exception occurs.
+				tx.rollback(); 
 			e.printStackTrace();
 		}
 
-		return null;
+		return entry;
 	}
 
 	private void endSession() {

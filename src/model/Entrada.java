@@ -44,7 +44,7 @@ public class Entrada {
 
 	@Override
 	public String toString() {
-		return "Entrada [id=" + id + ", instrucction=" + instruccion + "]";
+		return " " + instruccion + " ";
 	}
 	
 }

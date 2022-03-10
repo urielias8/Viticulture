@@ -33,8 +33,7 @@ public class Bodega {
 	public Bodega() {}
 
 
-	public Bodega(int idWinery, String name) {
-		this.idWinery = idWinery;
+	public Bodega(String name) {
 		this.name = name;
 		this.vids = new ArrayList<Vid>();
 	}
