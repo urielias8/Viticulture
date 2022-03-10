@@ -17,16 +17,14 @@ public class Vid {
 	private int id;
 	
 	@Column
-	private String type; 
+	private TipoVid type; 
 	
 	@Column
 	private int amount;
 	
 	public Vid() {}
 
-	public Vid(int id, String type, int amount) {
-		super();
-		this.id = id;
+	public Vid( TipoVid type, int amount) {
 		this.type = type;
 		this.amount = amount;
 	}
@@ -39,11 +37,11 @@ public class Vid {
 		this.id = id;
 	}
 
-	public String getType() {
+	public TipoVid getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(TipoVid type) {
 		this.type = type;
 	}
 
