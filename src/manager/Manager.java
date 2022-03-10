@@ -57,8 +57,8 @@ public class Manager {
 				field();
 				break;
 			case 'V':
-					TipoVid sumno = TipoVid.valueOf(en.getInstrucction().split(" ")[1].toUpperCase());
-				newVidToField(sumno,en.getInstrucction().split(" ")[2]);
+				TipoVid sumno = TipoVid.valueOf(en.getInstrucction().split(" ")[1].toUpperCase());
+				newVidToField(sumno, en.getInstrucction().split(" ")[2]);
 				break;
 			}
 		}
@@ -66,14 +66,26 @@ public class Manager {
 
 	private void newVidToField(TipoVid type, String amount) {
 		Vid vid = new Vid(type, Integer.parseInt(amount));
+
 		
 		field.getVid().add(vid);
-		
+
+		try {
+			tx = session.beginTransaction();
+			session.save(field);
+			tx.commit();
+			System.out.println("Updated Successfully.");
+
+		} catch (HibernateException e) {
+			if (tx != null)
+				tx.rollback(); 
+			e.printStackTrace();
+		}
 	}
 
 	private void field() {
 		field.setWinery(winery);
-		
+
 		try {
 
 			tx = session.beginTransaction();
@@ -92,9 +104,9 @@ public class Manager {
 	}
 
 	private void insertWinery(String type) {
-		
+
 		winery = new Bodega(type);
-		
+
 		try {
 
 			tx = session.beginTransaction();
