@@ -14,12 +14,12 @@ import javax.persistence.Table;
 
 
 @Entity  
-@Table(name= "Nota") 
+@Table(name= "Bodega") 
 public class Bodega {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO) 
-	@Column(name = "id", unique = true, nullable = true) 
+	@Column(name = "idWinery", unique = true, nullable = true) 
 	private int idWinery;   //primary key, unique y not null
 	
 	@Column
