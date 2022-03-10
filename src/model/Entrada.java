@@ -17,13 +17,13 @@ public class Entrada {
 	private int id;
 	
 	@Column
-	private String instrucction;
+	private String instruccion;
 	
 	public Entrada() {}
 	
 	public Entrada(int id, String instrucction) {
 		this.id = id;
-		this.instrucction = instrucction;
+		this.instruccion = instrucction;
 	}
 
 	public int getId() {
@@ -35,16 +35,16 @@ public class Entrada {
 	}
 
 	public String getInstrucction() {
-		return instrucction;
+		return instruccion;
 	}
 
 	public void setInstrucction(String instrucction) {
-		this.instrucction = instrucction;
+		this.instruccion = instrucction;
 	}
 
 	@Override
 	public String toString() {
-		return "Entrada [id=" + id + ", instrucction=" + instrucction + "]";
+		return "Entrada [id=" + id + ", instrucction=" + instruccion + "]";
 	}
 	
 }
