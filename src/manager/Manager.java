@@ -57,8 +57,8 @@ public class Manager {
 				field();
 				break;
 			case 'V':
-				TipoVid sumno = TipoVid.valueOf(en.getInstrucction().split(" ")[1].toUpperCase());
-				newVidToField(sumno, en.getInstrucction().split(" ")[2]);
+				TipoVid sa = TipoVid.valueOf(en.getInstrucction().split(" ")[1].toUpperCase());
+				newVidToField(sa, en.getInstrucction().split(" ")[2]);
 				break;
 			}
 		}
@@ -67,7 +67,6 @@ public class Manager {
 	private void newVidToField(TipoVid type, String amount) {
 		Vid vid = new Vid(type, Integer.parseInt(amount));
 
-		
 		field.getVid().add(vid);
 
 		try {
@@ -84,6 +83,7 @@ public class Manager {
 	}
 
 	private void field() {
+		field = new Campo();
 		field.setWinery(winery);
 
 		try {

@@ -31,7 +31,9 @@ public class Campo {
 	@JoinColumn(name = "winery")
 	private Bodega winery;
 	
-	public Campo () {}
+	public Campo () {
+		this.vid = new ArrayList<Vid>();
+	}
 
 	public Campo(int idField) {
 		this.idField = idField;
