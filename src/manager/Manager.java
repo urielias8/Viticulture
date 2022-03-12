@@ -60,8 +60,33 @@ public class Manager {
 				TipoVid sa = TipoVid.valueOf(en.getInstrucction().split(" ")[1].toUpperCase());
 				newVidToField(sa, en.getInstrucction().split(" ")[2]);
 				break;
+			case '#':
+				vendimia();
+				break;
 			}
 		}
+	}
+
+	private void vendimia() {
+		
+
+		try {
+
+			tx = session.beginTransaction();
+
+			for(Vid v: field.getVid())
+				winery.getVids().add(v);
+
+			session.save(winery);
+
+			tx.commit();
+
+		} catch (HibernateException e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		}
+
 	}
 
 	private void newVidToField(TipoVid type, String amount) {
@@ -71,13 +96,13 @@ public class Manager {
 
 		try {
 			tx = session.beginTransaction();
-			session.save(field);
+			session.save(vid);
 			tx.commit();
 			System.out.println("Updated Successfully.");
 
 		} catch (HibernateException e) {
 			if (tx != null)
-				tx.rollback(); 
+				tx.rollback();
 			e.printStackTrace();
 		}
 	}
@@ -93,11 +118,10 @@ public class Manager {
 			session.save(field);
 
 			tx.commit();
-			// System.out.println("Inserted Successfully.");
 
 		} catch (HibernateException e) {
 			if (tx != null)
-				tx.rollback(); // Roll back if any exception occurs.
+				tx.rollback();
 			e.printStackTrace();
 		}
 
@@ -114,11 +138,10 @@ public class Manager {
 			session.save(winery);
 
 			tx.commit();
-			// System.out.println("Inserted Successfully.");
 
 		} catch (HibernateException e) {
 			if (tx != null)
-				tx.rollback(); // Roll back if any exception occurs.
+				tx.rollback();
 			e.printStackTrace();
 		}
 	}

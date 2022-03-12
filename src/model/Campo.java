@@ -35,10 +35,9 @@ public class Campo {
 		this.vid = new ArrayList<Vid>();
 	}
 
-	public Campo(int idField) {
-		this.idField = idField;
+	public Campo(int idField, Bodega id_bodega) {
 		this.vid = new ArrayList<Vid>();
-		this.winery = new Bodega();
+		this.winery = id_bodega;
 	}
 
 	public int getIdField() {
